@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% block content %}
+    
+<div class="container">
+    <div class="row">
+        <h2>Select a file to upload</h2>
+
+        {% if filename %}
+            <div>
+                <img src="{{ url_for('display_image', filename=filename) }}" alt="">
+            </div>
+        {% endif %}
+        <form method="post" action="/displayPost" enctype="multipart/form-data">
+            <dl>
+                <p>
+                    <input type="file" name="file" class="form-control" autocomplete="off" required>
+                </p>
+            </dl>
+            <p>
+                <input type="submit" value="Submit" class="btn btn-info">
+            </p>
+        </form>
+    </div>
+</div>
+
+
+{% endblock content %}

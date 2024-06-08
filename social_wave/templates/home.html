@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+
+{% block additional_style %}
+    <style>
+
+    </style>
+
+{% endblock additional_style %}
+
+{% block content %}
+
+
+        <header class="bg-dark">
+            <div class="container pt-4 pt-xl-5">
+
+
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                {% for post in all_posts %}
+                  <div class="col">
+                  <a style="text-decoration: none;cursor: pointer" href="/user/{{ post.author }}">
+                        <div class="card">
+{#                          <img src="{{ url_for('static', filename='post_pics/' + post.image)}}" alt="image" class="card-img-top rounded-top">#}
+                          <img src="{{ post.image }}" alt="image" class="card-img-top rounded-top">
+                          <div class="card-body">
+                            <h5 class="card-title">#{{ post.caption }}</h5>
+                          </div>
+                          <div class="card-footer rounded-bottom">
+                              <span class="badge bg-primary">Last updated {{ post.createdAt}}</span>
+                              <span class="badge bg-secondary">Posted by {{ post.author |capitalize }}</span>
+                              <span class="badge bg-info">Likes: {{ post.likes }}</span>
+                          </div>
+                        </div>
+                  </a>
+                  </div>
+                {% endfor %}
+                </div>
+
+            </div>
+        </header>
+
+
+{% endblock content %}

@@ -1,0 +1,5 @@
+**/__pycache__/
+.idea
+instance
+temp.txt
+venv

@@ -1,0 +1,402 @@
+{% extends 'layout.html' %}
+
+{% block heading %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocialWave - Profile</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+{% endblock heading %}
+
+{% block styles %}
+    <style>
+        body{
+            background-color: #ffffff;
+        }
+        .profile_section{
+            color: black;
+            min-height: 300vh;
+        }
+        .profile_section .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+            color: #0c0c0c;
+            background-color: #fff;
+            border-color: var(--bs-nav-tabs-link-active-border-color);
+        }
+           .profile_pic {
+                padding: 10px 10px 25px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .image--cover {
+              width: 170px;
+              height: 170px;
+              border-radius: 50%;
+
+              object-fit: cover;
+              object-position: center right;
+            }
+
+            .bold-text{
+                font-weight: bold;
+            }
+            .img-fluid{
+                width: 100%;
+                height: 100%;
+            }
+            .post{
+                height: 17em;
+                border-radius: 100px;
+            }
+
+
+            .profile_btn {
+              position: relative;
+              display: inline-block;
+              align-items: center;
+              justify-content: flex-start;
+              width: 150px;
+              height: 45px;
+              border: none;
+              padding: 0px 20px;
+              background-color: rgb(38, 139, 255);
+              color: white;
+              box-shadow: 5px 5px 0px rgb(32, 149, 212);
+              font-weight: 500;
+              cursor: pointer;
+              border-radius: 10px;
+
+              transition-duration: .3s;
+              margin-right: 1em;
+            }
+            .message-btn{
+              background-color: rgb(255, 38, 154);
+              color: white;
+              box-shadow: 5px 5px 0px rgb(212, 32, 197);
+            }
+            .svg {
+              width: 20px;
+              position: absolute;
+              right: 0;
+
+              margin-right: 5px;
+              fill: white;
+              transition-duration: .3s;
+            }
+            .msgsvg{
+                padding-bottom: 21px;
+            }
+
+            .profile_btn:hover {
+              color: transparent;
+            }
+
+            .profile_btn:hover svg {
+              right: 43%;
+              margin: 0;
+              padding: 0;
+              border: none;
+              transition-duration: .3s;
+            }
+            .profile_btn:hover msgsvg {
+              right: 43%;
+              margin: 0;
+              padding-bottom: 21px; !important;
+              border: none;
+              transition-duration: .3s;
+            }
+
+            .profile_btn:active {
+              transform: translate(3px , 3px);
+              transition-duration: .3s;
+              box-shadow: 2px 2px 0px rgb(140, 32, 212);
+            }
+
+
+            .post_preview{
+                display: flex;
+                flex-direction: row;
+                height: 32rem;
+                width: 100%;
+                background-color: white;
+                color: black;
+                font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
+
+            }
+            .image_preview{
+                height: 100%;
+                width: 60%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: black;
+            }
+            .content{
+                {#background-color: #9a9999;#}
+                display: flex;
+                height: 100%;
+                width: 40%;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                border-bottom-right-radius: 8px;
+                border-top-right-radius: 8px;
+            }
+            .comments,.extra,.captions,.close,.author{
+                width: 100%;!important;
+                padding-left: 1rem;
+                padding-top: 0.6rem;
+            }
+            .close{
+                height: 5%;
+                display: flex;
+                flex-direction: row-reverse;
+                align-items: flex-start;
+
+            }
+            .author{
+                height: 10%;
+                border-bottom: 0.8px solid #bebebe;
+                display: flex;
+                flex-direction: row;
+                padding-left: 0.6rem;
+            }
+            .captions{
+                height: 10%;
+                border-bottom: 0.8px solid #bebebe;
+            }
+            .comments{
+                height: 60%;
+                border-bottom: 0.8px solid #bebebe;
+            }
+            .extra{
+                 height: 15%;
+
+            }
+            .image_preview_img{
+                object-fit: contain;
+                width: 100%;
+            }
+
+
+
+
+            {#<--miniprofile css-->#}
+                .profile_pic_mini {
+                    padding: 10px 10px 25px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-right: 5px;
+                }
+
+                .image--cover--mini {
+                  width: 30px;
+                  height: 30px;
+                  border-radius: 50%;
+
+                  object-fit: cover;
+                  object-position: center right;
+                }
+                #likebtn{
+                    background: none;
+                    color: inherit;
+                    border: none;
+                    padding: 0;
+                    font: inherit;
+                    cursor: pointer;
+                    outline: inherit;
+                }
+                </style>
+{% endblock styles %}
+
+{% block content %}
+
+
+<div class="profile_section">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="profile_pic" >
+                      <img src="{{ image_file }}" alt="" class="image--cover" />
+                        <div class="overlay"></div>
+                </div>
+            </div>
+            <div class="col-md-9 mt-4">
+                <!-- Profile Info -->
+                <h2>{{ user.username |capitalize }}</h2>
+                <p>Bio: {{ user.status}}.</p>
+                <p><span class="bold-text">{{ posts|length }}</span> post &nbsp;&nbsp;&nbsp;  <span class="bold-text">{{ followers_count }}</span> followers&nbsp;&nbsp;&nbsp; <span class="bold-text">{{ following_count }}</span> following</p>
+
+                <form method="POST">
+                {% if current_user %}
+                    {% if user.username == current_user.username %}
+
+                    {% else %}
+                            {% if is_following %}
+{#                                <button class="btn  btn-sm btn-primary rounded-start-pill" type="submit" formaction="/unfollow/{{ user.username }}">UnFollow</button>#}
+                                <button class="profile_btn" type="submit" formaction="/unfollow/{{ user.username }}">UnFollow<svg class="svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,256,256" width="32px" height="32px"><g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(8,8)"><path d="M12,2c-3.85547,0 -7,3.14453 -7,7c0,2.41016 1.23047,4.55078 3.09375,5.8125c-3.56641,1.53125 -6.09375,5.07031 -6.09375,9.1875h2c0,-4.42969 3.57031,-8 8,-8c1.375,0 2.65625,0.35938 3.78125,0.96875c-1.10937,1.375 -1.78125,3.13281 -1.78125,5.03125c0,4.40625 3.59375,8 8,8c4.40625,0 8,-3.59375 8,-8c0,-4.40625 -3.59375,-8 -8,-8c-1.74609,0 -3.37109,0.57422 -4.6875,1.53125c-0.44141,-0.27734 -0.92187,-0.51172 -1.40625,-0.71875c1.86328,-1.26172 3.09375,-3.40234 3.09375,-5.8125c0,-3.85547 -3.14453,-7 -7,-7zM12,4c2.77344,0 5,2.22656 5,5c0,2.77344 -2.22656,5 -5,5c-2.77344,0 -5,-2.22656 -5,-5c0,-2.77344 2.22656,-5 5,-5zM22,16c3.32422,0 6,2.67578 6,6c0,3.32422 -2.67578,6 -6,6c-3.32422,0 -6,-2.67578 -6,-6c0,-3.32422 2.67578,-6 6,-6zM21,18v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></g></g></svg></button>
+                            {% else %}
+{#                                <button class="btn  btn-sm btn-primary rounded-start-pill" type="submit" formaction="/follow/{{ user.username }}">Follow</button>#}
+                                  <button class="profile_btn " type="submit" formaction="/follow/{{ user.username }}">Follow<svg class="svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,256,256" width="32px" height="32px"><g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(8,8)"><path d="M12,2c-3.85547,0 -7,3.14453 -7,7c0,2.41016 1.23047,4.55078 3.09375,5.8125c-3.56641,1.53125 -6.09375,5.07031 -6.09375,9.1875h2c0,-4.42969 3.57031,-8 8,-8c1.375,0 2.65625,0.35938 3.78125,0.96875c-1.10937,1.375 -1.78125,3.13281 -1.78125,5.03125c0,4.40625 3.59375,8 8,8c4.40625,0 8,-3.59375 8,-8c0,-4.40625 -3.59375,-8 -8,-8c-1.74609,0 -3.37109,0.57422 -4.6875,1.53125c-0.44141,-0.27734 -0.92187,-0.51172 -1.40625,-0.71875c1.86328,-1.26172 3.09375,-3.40234 3.09375,-5.8125c0,-3.85547 -3.14453,-7 -7,-7zM12,4c2.77344,0 5,2.22656 5,5c0,2.77344 -2.22656,5 -5,5c-2.77344,0 -5,-2.22656 -5,-5c0,-2.77344 2.22656,-5 5,-5zM22,16c3.32422,0 6,2.67578 6,6c0,3.32422 -2.67578,6 -6,6c-3.32422,0 -6,-2.67578 -6,-6c0,-3.32422 2.67578,-6 6,-6zM21,18v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></g></g></svg></button>
+                            {% endif %}
+{#                                <button class="btn btn-sm btn-secondary rounded-end-pill">Message</button>#}
+{#                                  <button class="profile_btn message-btn">Message<svg class="svg msgsvg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,256,256" width="50px" height="50px"><g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M25,3.07031c-12.58483,0 -22.92969,8.85505 -22.92969,19.92969c0,6.42732 3.55165,12.08661 8.92969,15.71289c-0.0084,0.21557 0.0081,0.5678 -0.27344,1.61133c-0.34874,1.29283 -1.05338,3.10747 -2.48633,5.14063c-0.19943,0.28317 -0.22489,0.65374 -0.06607,0.96153c0.15882,0.30779 0.47558,0.50176 0.82193,0.50332c6.17727,0.02689 9.75276,-4.02489 10.30859,-4.67773c1.82878,0.40716 3.72375,0.67773 5.69531,0.67773c12.58387,0 22.92969,-8.85499 22.92969,-19.92969c0,-11.07469 -10.34582,-19.92969 -22.92969,-19.92969zM25,4.92969c11.71613,0 21.07031,8.15901 21.07031,18.07031c0,9.91131 -9.35418,18.07031 -21.07031,18.07031c-2.00197,0 -3.93653,-0.23908 -5.76953,-0.68555c-0.35057,-0.08579 -0.71911,0.03909 -0.94531,0.32031c0,0 -2.89026,3.27976 -7.49805,4.05469c0.83303,-1.49486 1.44808,-2.88983 1.73438,-3.95117c0.39901,-1.47917 0.4043,-2.48242 0.4043,-2.48242c0.00006,-0.31837 -0.1628,-0.61462 -0.43164,-0.78516c-5.22694,-3.31343 -8.56445,-8.59775 -8.56445,-14.54102c0,-9.91136 9.35315,-18.07031 21.07031,-18.07031zM14,16c-0.36064,-0.0051 -0.69608,0.18438 -0.87789,0.49587c-0.18181,0.3115 -0.18181,0.69676 0,1.00825c0.18181,0.3115 0.51725,0.50097 0.87789,0.49587h22c0.36064,0.0051 0.69608,-0.18438 0.87789,-0.49587c0.18181,-0.3115 0.18181,-0.69676 0,-1.00825c-0.18181,-0.3115 -0.51725,-0.50097 -0.87789,-0.49587zM10,22c-0.36064,-0.0051 -0.69608,0.18438 -0.87789,0.49587c-0.18181,0.3115 -0.18181,0.69676 0,1.00825c0.18181,0.3115 0.51725,0.50097 0.87789,0.49587h17c0.36064,0.0051 0.69608,-0.18438 0.87789,-0.49587c0.18181,-0.3115 0.18181,-0.69676 0,-1.00825c-0.18181,-0.3115 -0.51725,-0.50097 -0.87789,-0.49587zM33,22c-0.36064,-0.0051 -0.69608,0.18438 -0.87789,0.49587c-0.18181,0.3115 -0.18181,0.69676 0,1.00825c0.18181,0.3115 0.51725,0.50097 0.87789,0.49587h7c0.36064,0.0051 0.69608,-0.18438 0.87789,-0.49587c0.18181,-0.3115 0.18181,-0.69676 0,-1.00825c-0.18181,-0.3115 -0.51725,-0.50097 -0.87789,-0.49587zM14,28c-0.36064,-0.0051 -0.69608,0.18438 -0.87789,0.49587c-0.18181,0.3115 -0.18181,0.69676 0,1.00825c0.18181,0.3115 0.51725,0.50097 0.87789,0.49587h22c0.36064,0.0051 0.69608,-0.18438 0.87789,-0.49587c0.18181,-0.3115 0.18181,-0.69676 0,-1.00825c-0.18181,-0.3115 -0.51725,-0.50097 -0.87789,-0.49587z"></path></g></g></svg></button>#}
+                    {% endif %}
+                {% else %}
+                    <button class="profile_btn " type="submit" formaction="/follow/{{ user.username }}">Follow<svg class="svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,256,256" width="32px" height="32px"><g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(8,8)"><path d="M12,2c-3.85547,0 -7,3.14453 -7,7c0,2.41016 1.23047,4.55078 3.09375,5.8125c-3.56641,1.53125 -6.09375,5.07031 -6.09375,9.1875h2c0,-4.42969 3.57031,-8 8,-8c1.375,0 2.65625,0.35938 3.78125,0.96875c-1.10937,1.375 -1.78125,3.13281 -1.78125,5.03125c0,4.40625 3.59375,8 8,8c4.40625,0 8,-3.59375 8,-8c0,-4.40625 -3.59375,-8 -8,-8c-1.74609,0 -3.37109,0.57422 -4.6875,1.53125c-0.44141,-0.27734 -0.92187,-0.51172 -1.40625,-0.71875c1.86328,-1.26172 3.09375,-3.40234 3.09375,-5.8125c0,-3.85547 -3.14453,-7 -7,-7zM12,4c2.77344,0 5,2.22656 5,5c0,2.77344 -2.22656,5 -5,5c-2.77344,0 -5,-2.22656 -5,-5c0,-2.77344 2.22656,-5 5,-5zM22,16c3.32422,0 6,2.67578 6,6c0,3.32422 -2.67578,6 -6,6c-3.32422,0 -6,-2.67578 -6,-6c0,-3.32422 2.67578,-6 6,-6zM21,18v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></g></g></svg></button>
+                    <button class="profile_btn message-btn">Message<svg class="svg msgsvg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,256,256" width="50px" height="50px"><g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M25,3.07031c-12.58483,0 -22.92969,8.85505 -22.92969,19.92969c0,6.42732 3.55165,12.08661 8.92969,15.71289c-0.0084,0.21557 0.0081,0.5678 -0.27344,1.61133c-0.34874,1.29283 -1.05338,3.10747 -2.48633,5.14063c-0.19943,0.28317 -0.22489,0.65374 -0.06607,0.96153c0.15882,0.30779 0.47558,0.50176 0.82193,0.50332c6.17727,0.02689 9.75276,-4.02489 10.30859,-4.67773c1.82878,0.40716 3.72375,0.67773 5.69531,0.67773c12.58387,0 22.92969,-8.85499 22.92969,-19.92969c0,-11.07469 -10.34582,-19.92969 -22.92969,-19.92969zM25,4.92969c11.71613,0 21.07031,8.15901 21.07031,18.07031c0,9.91131 -9.35418,18.07031 -21.07031,18.07031c-2.00197,0 -3.93653,-0.23908 -5.76953,-0.68555c-0.35057,-0.08579 -0.71911,0.03909 -0.94531,0.32031c0,0 -2.89026,3.27976 -7.49805,4.05469c0.83303,-1.49486 1.44808,-2.88983 1.73438,-3.95117c0.39901,-1.47917 0.4043,-2.48242 0.4043,-2.48242c0.00006,-0.31837 -0.1628,-0.61462 -0.43164,-0.78516c-5.22694,-3.31343 -8.56445,-8.59775 -8.56445,-14.54102c0,-9.91136 9.35315,-18.07031 21.07031,-18.07031zM14,16c-0.36064,-0.0051 -0.69608,0.18438 -0.87789,0.49587c-0.18181,0.3115 -0.18181,0.69676 0,1.00825c0.18181,0.3115 0.51725,0.50097 0.87789,0.49587h22c0.36064,0.0051 0.69608,-0.18438 0.87789,-0.49587c0.18181,-0.3115 0.18181,-0.69676 0,-1.00825c-0.18181,-0.3115 -0.51725,-0.50097 -0.87789,-0.49587zM10,22c-0.36064,-0.0051 -0.69608,0.18438 -0.87789,0.49587c-0.18181,0.3115 -0.18181,0.69676 0,1.00825c0.18181,0.3115 0.51725,0.50097 0.87789,0.49587h17c0.36064,0.0051 0.69608,-0.18438 0.87789,-0.49587c0.18181,-0.3115 0.18181,-0.69676 0,-1.00825c-0.18181,-0.3115 -0.51725,-0.50097 -0.87789,-0.49587zM33,22c-0.36064,-0.0051 -0.69608,0.18438 -0.87789,0.49587c-0.18181,0.3115 -0.18181,0.69676 0,1.00825c0.18181,0.3115 0.51725,0.50097 0.87789,0.49587h7c0.36064,0.0051 0.69608,-0.18438 0.87789,-0.49587c0.18181,-0.3115 0.18181,-0.69676 0,-1.00825c-0.18181,-0.3115 -0.51725,-0.50097 -0.87789,-0.49587zM14,28c-0.36064,-0.0051 -0.69608,0.18438 -0.87789,0.49587c-0.18181,0.3115 -0.18181,0.69676 0,1.00825c0.18181,0.3115 0.51725,0.50097 0.87789,0.49587h22c0.36064,0.0051 0.69608,-0.18438 0.87789,-0.49587c0.18181,-0.3115 0.18181,-0.69676 0,-1.00825c-0.18181,-0.3115 -0.51725,-0.50097 -0.87789,-0.49587z"></path></g></g></svg></button>
+                {% endif %}
+                </form>
+            </div>
+        </div>
+
+        <!-- Tabs for Posts and Reels -->
+        <ul class="nav nav-tabs mt-3">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#posts">Posts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#reels">Reels</a>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content">
+            <div id="posts" class="tab-pane fade show active mt-4">
+                <!-- Post Content Here -->
+                <div class="row">
+                    {% for post in posts %}
+                        <div class="col-md-4 mb-4 post" >
+                            <img src="{{ post.image}}" alt="Post" class="img-fluid" data-toggle="modal" data-target="#imageModal" style="cursor: pointer;" onclick='PassDataToPopUp("{{  post.image }}","{{ post['caption'] }}","{{ post['createdAt'] }}","{{ post.id }}","{{ post.author }}","{{ post.comments }}")' id="{{ post.id }}">
+{#                            <img src="{{ url_for('static', filename='post_pics/' + post.image)}}" alt="Post" class="img-fluid" data-toggle="modal" data-target="#imageModal" style="cursor: pointer;" onclick='PassDataToPopUp("{{ url_for('static', filename='post_pics/' + post.image) }}","{{ post['caption'] }}","{{ post['createdAt'] }}","{{ post.id }}","{{ post.author }}","{{ post.comments }}")' id="{{ post.id }}">#}
+                        </div>
+                    {% endfor %}
+{#                    <div class="col-md-4 mb-4 post">#}
+{#                        <img src="https://source.unsplash.com/400x400/?travel" alt="Post 2" class="img-fluid">#}
+{#                    </div>#}
+{#                    <div class="col-md-4 mb-4 post">#}
+{#                        <img src="https://source.unsplash.com/400x400/?food" alt="Post 3" class="img-fluid">#}
+{#                    </div>#}
+{##}
+{#                    <div class="col-md-4 mb-4 post">#}
+{#                        <img src="https://source.unsplash.com/400x400/?work" alt="Post 1" class="img-fluid">#}
+{#                    </div>#}
+
+                </div>
+            </div>
+            <div id="reels" class="tab-pane fade mt-4">
+                <!-- Reel Content Here -->
+                <div class="row">
+
+                    To be Updated soon...
+{#                    <div class="col-md-4 mb-4">#}
+{#                        <video controls class="img-fluid">#}
+{#                            <source#}
+{#                                src="https://player.vimeo.com/external/230452406.sd.mp4?s=4c12b181d30e0810f157b6c9f556664ac7c2f6ed&profile_id=164&oauth2_token_id=57447761"#}
+{#                                type="video/mp4">#}
+{#                            Your browser does not support the video tag.#}
+{#                        </video>#}
+{#                    </div>#}
+{#                    <div class="col-md-4 mb-4">#}
+{#                        <video controls class="img-fluid">#}
+{#                            <source#}
+{#                                src="https://player.vimeo.com/external/305340872.sd.mp4?s=54b7ce48ec5608cbb2e97139a02caed1c93d1346&profile_id=164&oauth2_token_id=57447761"#}
+{#                                type="video/mp4">#}
+{#                            Your browser does not support the video tag.#}
+{#                        </video>#}
+{#                    </div>#}
+{#                    <div class="col-md-4 mb-4">#}
+{#                        <video controls class="img-fluid">#}
+{#                            <source#}
+{#                                src="https://player.vimeo.com/external/287940617.sd.mp4?s=c3b85d641f3e0eade4cda1b0c170b33247f05e9f&profile_id=164&oauth2_token_id=57447761"#}
+{#                                type="video/mp4">#}
+{#                            Your browser does not support the video tag.#}
+{#                        </video>#}
+{#                    </div>#}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true" >
+        <div class="modal-dialog modal-dialog-centered">
+                        <div class="post_preview modal-content">
+                          <div class="image_preview">
+                              <img src=""  alt="image" class="image_preview_img" id="popup-image" style="max-width: 100%;height: auto;object-fit: contain;">
+                          </div>
+                          <div class="content">
+                              <div class="close">
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-right: 1rem;">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                              </div>
+                              <div class="author">
+                                   <div class="profile_pic_mini align-content-center"  style="cursor:pointer;" onclick="goToUser()">
+                                      <img src="{{ image_file }}" alt="" class="image--cover--mini" />
+                                   </div>
+                                   <div style="cursor:pointer;" onclick="goToUser()">{{ user.username| capitalize }}</div>
+                              </div>
+                              <div class="captions" id="caption">#Caption</div>
+                              <div class="comments" id="comments">
+                                  <ul id="commentUL"><i>comments feature coming soon...</i></ul>
+                              </div>
+                              <div class="extra" id="extra">
+{#                                  <form method="POST" action="#" id="like_form">#}
+{#                                    <button type="submit" id="likebtn">#}
+                                        <img width="25" height="25" src="https://img.icons8.com/ios/50/like--v1.png" alt="like--v1" style="cursor: pointer;"/>
+{#                                    </button>#}
+{#                                  </form>#}
+{#                                  <img width="25" height="25" src="https://img.icons8.com/ios/50/speech-bubble--v1.png" alt="speech-bubble--v1" style="cursor: pointer;"/>#}
+{#                                  <span class="likes">400 likes</span>#}
+                                  <span class="badge bg-primary" id="badge" style="margin-top: 15px">Last updated ...</span>
+                              </div>
+                          </div>
+
+                        </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+
+{% endblock content %}
+
+
+{% block scripts %}
+    <script>
+        // JavaScript functions to handle pop-up
+        function PassDataToPopUp(imageUrl,post_caption,post_createdAt,post_id,post_author,post_comments) {
+            const popupImage = document.getElementById("popup-image");
+            popupImage.src = imageUrl;
+
+            const caption = document.getElementById("caption");
+            caption.innerText = '#' +  post_caption.charAt(0).toUpperCase() + post_caption.slice(1)
+
+            const badge = document.getElementById("badge");
+            badge.innerText = 'Posted ' +  post_createdAt
+
+            document.getElementById("like_form").action = `/like/${post_author}/${post_id}`
+
+
+
+        }
+        function goToUser(){
+            location.reload();
+        }
+
+    </script>
+
+{% endblock scripts %}

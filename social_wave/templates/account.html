@@ -1,0 +1,138 @@
+
+{% extends 'layout.html' %}
+
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static',filename='bootstrap_assets/bootstrap/css/bootstrap.min.css')}}  ">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+      <!-- Icons font CSS-->
+    <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <!-- Vendor CSS-->
+    <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+    <!-- Main CSS-->
+    <link href=" {{ url_for('static',filename='account_page/css/main.css' )}} " rel="stylesheet" media="all">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <style>
+    .profile_pic {
+        padding: 10px 10px 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .image--cover {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+
+      object-fit: cover;
+      object-position: center right;
+    }
+
+
+
+
+    </style>
+{% endblock styles %}
+
+
+
+{% block content %}
+
+    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+
+
+        <div class="wrapper wrapper--w680">
+            <div class="card card-4">
+                <div class="card-body">
+                    <h2 class="title">Account Page</h2>
+
+                    <div class="profile_pic align-content-center" >
+                      <img src="{{ image_file }}" alt="" class="image--cover" />
+                    </div>
+
+                    <form action="/account" method="POST" enctype="multipart/form-data">
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Username</label>
+                                    <input class="input--style-4" type="text" name="username" value="{{ current_user.username }}">
+                                     <div id="info" class="form-text" style="color: black;">Username can't be changed.</div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Email</label>
+                                    <input class="input--style-4" type="text" name="email" value="{{ current_user.email }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Birthday</label>
+                                    <div class="input-group-icon">
+                                        <input class="input--style-4 js-datepicker" type="text" name="dob" value="{{ current_user.dob }}">
+                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Gender</label>
+                                    <div class="p-t-10">
+                                        <label class="radio-container m-r-45">Male
+                                            <input type="radio" checked="checked" name="gender" value="male">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="radio-container">Female
+                                            <input type="radio" name="gender" value="female">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                                <div class="input-group">
+                                    <label class="label">Phone Number</label>
+                                    <input class="input--style-4" type="text" name="phone" value="{{ current_user.phone }}">
+                                </div>
+                        </div>
+                        <div class="input-group">
+                                <div class="input-group">
+                                    <label class="label">Status</label>
+                                    <input class="input--style-4" type="text" name="status" value="{{ current_user.status }}">
+                                </div>
+                        </div>
+                        <div class="input-group">
+                              <input type="file" name="image" class="form-control rounded-0" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                        </div>
+                        <div class="p-t-15">
+                            <button class="btn btn--radius-2 btn--blue" type="submit">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jquery JS-->
+    <script src="{{url_for('static',filename='account_page/vendor/jquery/jquery.min.js')}}"></script>
+    <!-- Vendor JS-->
+    <script src="{{url_for('static',filename='account_page/vendor/select2/select2.min.js')}}"></script>
+    <script src="{{url_for('static',filename='account_page/vendor/datepicker/moment.min.js')}}"></script>
+    <script src="{{url_for('static',filename='account_page/vendor/datepicker/daterangepicker.js')}}"></script>
+
+    <!-- Main JS-->
+    <script src="{{url_for('static',filename='account_page/js/global.js')}}"></script>
+
+{% endblock content %}
